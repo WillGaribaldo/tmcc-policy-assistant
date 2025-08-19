@@ -5,9 +5,9 @@ import streamlit as st
 from openai import OpenAI
 
 # --- Branding ---
-LOGO_PATH_GREEN = "assets\TMCC - 583 - STACKED.png"   # put your logo file here
+LOGO_PATH_GREEN = "assets/TMCC - BLACK - STACKED.png"   # put your logo file here
 
-LOGO_PATH_BLACK = "assets\TMCC - BLACK - STACKED.png"   # put your logo file here
+LOGO_PATH_BLACK = "assets/TMCC - BLACK - STACKED.png"   # put your logo file here
 
 # Must be first Streamlit call
 st.set_page_config(
