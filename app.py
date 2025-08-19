@@ -39,7 +39,7 @@ VECTOR_STORE_ID = os.getenv("VECTOR_STORE_ID") or (
 
 if not OPENAI_API_KEY or not VECTOR_STORE_ID:
     with st.sidebar:
-        st.image(LOGO_PATH, use_container_width=True)
+        st.image(LOGO_PATH_GREEN, use_container_width=True)
         st.markdown("---")
         if not OPENAI_API_KEY:
             st.error("Missing OPENAI_API_KEY environment variable.")
