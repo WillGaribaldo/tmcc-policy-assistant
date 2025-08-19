@@ -5,9 +5,9 @@ import streamlit as st
 from openai import OpenAI
 
 # --- Branding ---
-LOGO_PATH_GREEN = "assets/TMCC - BLACK - STACKED.png"   # put your logo file here
+LOGO_PATH_GREEN = "assets\TMCC - 583 - STACKED.png"   # put your logo file here
 
-LOGO_PATH_BLACK = "assets/TMCC - BLACK - STACKED.png"   # put your logo file here
+LOGO_PATH_BLACK = "assets\TMCC - BLACK - STACKED.png"   # put your logo file here
 
 # Must be first Streamlit call
 st.set_page_config(
@@ -31,11 +31,23 @@ st.title("TMCC Policy Manual Assistant")
 st.caption("By Will Garibaldo")
 
 # --- Load configuration ---
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-VECTOR_STORE_ID = os.getenv("VECTOR_STORE_ID") or (
-    open("vector_store_id.txt", "r", encoding="utf-8").read().strip()
-    if os.path.exists("vector_store_id.txt") else None
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
+VECTOR_STORE_ID = (
+    st.secrets.get("VECTOR_STORE_ID")
+    or os.getenv("VECTOR_STORE_ID")
+    or (open("vector_store_id.txt", "r", encoding="utf-8").read().strip()
+        if os.path.exists("vector_store_id.txt") else None)
 )
+
+if st.secrets.get("APP_PASSWORD"):
+    PASS = os.getenv("APP_PASSWORD") or st.secrets["APP_PASSWORD"]
+    if "authed" not in st.session_state:
+        st.session_state.authed = False
+    if not st.session_state.authed:
+        pw = st.text_input("Enter access password", type="password")
+        if st.button("Enter"):
+            st.session_state.authed = (pw == PASS)
+        st.stop()
 
 if not OPENAI_API_KEY or not VECTOR_STORE_ID:
     with st.sidebar:
@@ -63,7 +75,8 @@ with st.sidebar:
     st.image(LOGO_PATH_GREEN, use_container_width=True)
     st.markdown("---")
     st.subheader("Settings")
-    st.caption(f"Vector Store: `{VECTOR_STORE_ID}`")
+    st.caption(f"Key loaded: {'✅' if bool(OPENAI_API_KEY) else '❌'}")
+    st.caption(f"Vector store: {VECTOR_STORE_ID[:6]+'…' if VECTOR_STORE_ID else '❌'}")
     if st.button("Clear chat"):
         st.session_state["messages"] = [{"role": "system", "content": SYSTEM_PROMPT}]
         st.rerun()
