@@ -1,0 +1,4 @@
+openai>=1.100.1
+streamlit>=1.36
+python-dotenv>=1.0
+pillow>=10

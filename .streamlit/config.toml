@@ -1,0 +1,7 @@
+[theme]
+base = "light"
+primaryColor = "#004B41"            # PMS 3305 (deep green) – great contrast with white text
+backgroundColor = "#FFFFFF"         # canvas
+secondaryBackgroundColor = "#F5F7F6" # soft card/sidebar (neutral tint)
+textColor = "#231A43"
+font = "sans serif"                    # "serif" | "sans serif" | "monospace"
